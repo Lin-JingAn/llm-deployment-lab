@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- 设置网页字符编码，保证中文正常显示 -->
+  <meta charset="UTF-8">
+
+  <!-- 让网页在手机和电脑上都能正常缩放 -->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <!-- 浏览器标签页显示的名称 -->
+  <title>LLM Deployment Lab</title>
+
+  <!-- 网页简介，后续部署到互联网时有利于搜索展示 -->
+  <meta
+    name="description"
+    content="记录大语言模型本地部署、接口开发和性能评测过程的个人项目作品集。"
+  >
+
+  <!-- 引入样式文件 -->
+  <link rel="stylesheet" href="styles.css?v=20260802220447">
+</head>
+
+<body>
+
+  <!-- ==================== 顶部导航栏 ==================== -->
+  <header class="site-header">
+    <div class="container header-content">
+
+      <!-- 网站名称 -->
+      <a class="site-logo" href="#home">
+        LLM Deployment Lab
+      </a>
+
+      <!-- 页面导航 -->
+      <nav class="site-nav">
+        <a href="#overview">项目概览</a>
+        <a href="#environment">运行环境</a>
+        <a href="#roadmap">部署进度</a>
+        <a href="#model-chat">在线演示</a>
+        <a href="usage.html">调用记录</a>
+        <a href="#daily-log">每日记录</a>
+      </nav>
+      <div
+        id="header-auth"
+        class="header-auth"
+      >
+        <div
+          id="guest-actions"
+          class="header-auth-actions"
+        >
+          <a
+            class="header-auth-link"
+            href="login.html"
+          >
+            登录
+          </a>
+
+          <a
+            class="header-auth-button"
+            href="register.html"
+          >
+            注册
+          </a>
+        </div>
+
+        <div
+          id="user-actions"
+          class="header-user-actions"
+          hidden
+        >
+          <span
+            id="current-user-name"
+            class="current-user-name"
+          ></span>
+
+          <button
+            id="logout-button"
+            class="header-logout-button"
+            type="button"
+          >
+            退出
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- ==================== 首页介绍区域 ==================== -->
+    <section id="home" class="hero-section">
+      <div class="container hero-content">
+
+        <!-- 当前项目状态 -->
+        <p class="status-label">
+          PROJECT IN PROGRESS
+        </p>
+
+        <!-- 项目主标题 -->
+        <h1>
+          Local Large Language Model Deployment Lab
+        </h1>
+
+        <!-- 项目中文说明 -->
+        <p class="hero-description">
+          一个记录大语言模型本地部署、API服务开发、
+          性能评测和智能应用开发全过程的个人工程项目。
+        </p>
+
+        <!-- 当前项目状态信息 -->
+        <div class="hero-actions">
+          <a class="primary-button" href="#model-chat">
+            在线模型演示
+          </a>
+
+          <a class="secondary-button" href="#roadmap">
+            查看部署进度
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==================== 项目概览 ==================== -->
+    <section id="overview" class="content-section">
+      <div class="container">
+
+        <div class="section-heading">
+          <p class="section-label">PROJECT OVERVIEW</p>
+
+          <h2>项目概览</h2>
+
+          <p>
+            本项目将从服务器环境检查开始，逐步完成模型部署、
+            接口封装、网页接入和性能评测。
+          </p>
+        </div>
+
+        <div class="card-grid">
+
+          <article class="info-card">
+            <h3>项目目标</h3>
+
+            <p>
+              在Linux服务器上部署开源大语言模型，
+              并将模型封装为可以通过HTTP请求调用的服务。
+            </p>
+          </article>
+
+          <article class="info-card">
+            <h3>当前阶段</h3>
+
+            <p id="current-stage">
+              已完成服务器环境检查，准备创建独立Conda环境。
+            </p>
+          </article>
+
+          <article class="info-card">
+            <h3>技术路线</h3>
+
+            <p>
+              Linux → Conda → PyTorch → Transformers →
+              Qwen → FastAPI → Web Application
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== 服务器运行环境 ==================== -->
+    <section
+      id="environment"
+      class="content-section alternate-section"
+    >
+      <div class="container">
+
+        <div class="section-heading">
+          <p class="section-label">SERVER ENVIRONMENT</p>
+
+          <h2>服务器运行环境</h2>
+
+          <p>
+            当前选择RTX 3090服务器作为第一阶段的大模型部署环境。
+          </p>
+        </div>
+
+        <div class="environment-grid">
+
+          <article class="environment-card">
+            <span class="environment-name">GPU</span>
+            <strong>NVIDIA GeForce RTX 3090</strong>
+          </article>
+
+          <article class="environment-card">
+            <span class="environment-name">GPU Memory</span>
+            <strong>24 GB</strong>
+          </article>
+
+          <article class="environment-card">
+            <span class="environment-name">Operating System</span>
+            <strong>Ubuntu 18.04.4 LTS</strong>
+          </article>
+
+          <article class="environment-card">
+            <span class="environment-name">NVIDIA Driver</span>
+            <strong>470.86</strong>
+          </article>
+
+          <article class="environment-card">
+            <span class="environment-name">CUDA Toolkit</span>
+            <strong>11.2</strong>
+          </article>
+
+          <article class="environment-card">
+            <span class="environment-name">PyTorch</span>
+            <strong>1.12.1 + cu113</strong>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==================== 部署路线和进度 ==================== -->
+    <section id="roadmap" class="content-section">
+      <div class="container">
+
+        <div class="section-heading">
+          <p class="section-label">DEPLOYMENT ROADMAP</p>
+
+          <h2>部署进度</h2>
+
+          <p>
+            每完成一个阶段，就更新对应状态和实验结果。
+          </p>
+        </div>
+
+        <ol class="roadmap-list">
+
+          <li class="roadmap-item completed">
+            <div class="roadmap-number">01</div>
+
+            <div>
+              <h3>服务器环境检查</h3>
+
+              <p>
+                检查GPU、显存、驱动、CUDA、Python、
+                Conda、PyTorch和磁盘空间。
+              </p>
+
+              <span class="progress-status">已完成</span>
+            </div>
+          </li>
+
+          <li class="roadmap-item">
+            <div class="roadmap-number">02</div>
+
+            <div>
+              <h3>创建独立开发环境</h3>
+
+              <p>
+                使用Conda创建独立环境，避免影响原有论文程序。
+              </p>
+
+              <span class="progress-status">待开始</span>
+            </div>
+          </li>
+
+          <li class="roadmap-item">
+            <div class="roadmap-number">03</div>
+
+            <div>
+              <h3>安装模型运行依赖</h3>
+
+              <p>
+                安装兼容版本的PyTorch、Transformers和相关依赖。
+              </p>
+
+              <span class="progress-status">待开始</span>
+            </div>
+          </li>
+
+          <li class="roadmap-item">
+            <div class="roadmap-number">04</div>
+
+            <div>
+              <h3>加载Qwen模型</h3>
+
+              <p>
+                将模型加载到RTX 3090，并完成第一次GPU推理。
+              </p>
+
+              <span class="progress-status">待开始</span>
+            </div>
+          </li>
+
+          <li class="roadmap-item">
+            <div class="roadmap-number">05</div>
+
+            <div>
+              <h3>开发FastAPI服务</h3>
+
+              <p>
+                将本地模型封装为可以通过HTTP请求调用的API。
+              </p>
+
+              <span class="progress-status">待开始</span>
+            </div>
+          </li>
+
+          <li class="roadmap-item">
+            <div class="roadmap-number">06</div>
+
+            <div>
+              <h3>接入网页应用</h3>
+
+              <p>
+                在网页中输入问题，并显示服务器模型生成的回答。
+              </p>
+
+              <span class="progress-status">待开始</span>
+            </div>
+          </li>
+
+          <li class="roadmap-item">
+            <div class="roadmap-number">07</div>
+
+            <div>
+              <h3>性能测试与可视化</h3>
+
+              <p>
+                记录显存占用、响应时间和Token生成速度。
+              </p>
+
+              <span class="progress-status">待开始</span>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+
+        <!-- ==================== 在线多模型对话 ==================== -->
+    <section id="model-chat" class="content-section">
+      <div class="container">
+
+        <div class="section-heading">
+          <p class="section-label">LIVE MODEL DEMO</p>
+
+          <h2>在线多模型对话</h2>
+
+          <p>
+            网页通过统一的FastAPI接口调用LiteLLM网关。
+            可用模型由后端模型注册表动态提供，
+            并实时展示响应时间和Token用量。
+          </p>
+        </div>
+
+        <div class="chat-layout">
+
+          <aside
+  id="conversation-panel"
+  class="conversation-panel"
+>
+  <div class="conversation-panel-header">
+    <div>
+      <p class="conversation-panel-label">
+        CHAT HISTORY
+      </p>
+      <h3>历史会话</h3>
+    </div>
+
+    <button
+      id="new-conversation-button"
+      class="conversation-new-button"
+      type="button"
+    >
+      新建
+    </button>
+  </div>
+
+  <p
+    id="conversation-empty"
+    class="conversation-empty"
+  >
+    暂无历史会话。发送第一条消息后，会话将自动保存。
+  </p>
+
+  <div
+    id="conversation-list"
+    class="conversation-list"
+  ></div>
+
+  <button
+    id="delete-conversation-button"
+    class="conversation-delete-button"
+    type="button"
+    disabled
+  >
+    删除当前会话
+  </button>
+</aside>
+
+          <div class="chat-panel">
+
+            <div class="chat-header">
+              <div>
+                <h3>Unified LLM Gateway Assistant</h3>
+
+                <p>
+                  Multi-model inference through FastAPI and LiteLLM
+                </p>
+              </div>
+
+              <div
+                id="api-status"
+                class="api-status checking"
+              >
+                正在检查服务
+              </div>
+            </div>
+
+            <div
+              id="chat-messages"
+              class="chat-messages"
+            >
+              <div class="chat-message assistant-message">
+                <div class="message-role">MODEL</div>
+
+                <p>
+                  正在连接统一大模型网关并加载可用模型。
+                </p>
+              </div>
+            </div>
+
+            <form id="chat-form" class="chat-form">
+
+              <label class="form-field">
+                <span>模型选择</span>
+
+                <select
+                  id="model-select"
+                  disabled
+                  required
+                >
+                  <option value="">
+                    正在加载模型
+                  </option>
+                </select>
+              </label>
+
+              <label
+                for="chat-input"
+                class="visually-hidden"
+              >
+                输入问题
+              </label>
+
+              <textarea
+                id="chat-input"
+                rows="4"
+                maxlength="4000"
+                placeholder="请输入你想向当前模型提出的问题"
+                required
+              ></textarea>
+
+              <div class="chat-controls">
+
+                <label class="token-control">
+                  <span>最大生成Token数</span>
+
+                  <select id="max-new-tokens">
+                    <option value="64">64</option>
+                    <option value="128" selected>128</option>
+                    <option value="256">256</option>
+                    <option value="512">512</option>
+                  </select>
+                </label>
+
+                <button
+                  id="send-message-button"
+                  class="primary-button"
+                  type="submit"
+                >
+                  发送问题
+                </button>
+
+              </div>
+
+            </form>
+
+          </div>
+
+
+          <aside class="metrics-panel">
+
+            <h3>本次推理指标</h3>
+
+            <div class="metric-list">
+
+              <div class="metric-item">
+                <span>模型服务</span>
+
+                <strong id="metric-device">
+                  等待请求
+                </strong>
+              </div>
+
+              <div class="metric-item">
+                <span>响应时间</span>
+
+                <strong id="metric-time">
+                  —
+                </strong>
+              </div>
+
+              <div class="metric-item">
+                <span>输入Token</span>
+
+                <strong id="metric-input-tokens">
+                  —
+                </strong>
+              </div>
+
+              <div class="metric-item">
+                <span>输出Token</span>
+
+                <strong id="metric-output-tokens">
+                  —
+                </strong>
+              </div>
+
+              <div class="metric-item">
+                <span>总Token</span>
+
+                <strong id="metric-memory">
+                  —
+                </strong>
+              </div>
+
+            </div>
+
+            <p class="metrics-note">
+              模型列表、响应时间和Token用量均由FastAPI
+              根据LiteLLM响应实时返回。
+            </p>
+
+          </aside>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== 每日记录表单 ==================== -->
+    <section
+      id="daily-log"
+      class="content-section alternate-section"
+    >
+      <div class="container">
+
+        <div class="section-heading">
+          <p class="section-label">DAILY DEVELOPMENT LOG</p>
+
+          <h2>每日开发记录</h2>
+
+          <p>
+            记录每天完成的任务、执行命令、遇到的问题和解决方法。
+          </p>
+        </div>
+
+        <form id="log-form" class="log-form">
+
+          <div class="form-row">
+
+            <label class="form-field">
+              <span>日期</span>
+
+              <input
+                id="log-date"
+                type="date"
+                required
+              >
+            </label>
+
+            <label class="form-field">
+              <span>当前阶段</span>
+
+              <input
+                id="log-stage"
+                type="text"
+                placeholder="例如：创建Conda环境"
+                required
+              >
+            </label>
+
+          </div>
+
+          <label class="form-field">
+            <span>今日完成</span>
+
+            <textarea
+              id="log-completed"
+              rows="4"
+              placeholder="记录今天完成的任务和结果"
+              required
+            ></textarea>
+          </label>
+
+          <label class="form-field">
+            <span>执行命令</span>
+
+            <textarea
+              id="log-commands"
+              rows="6"
+              placeholder="将今天运行过的Linux命令粘贴到这里"
+            ></textarea>
+          </label>
+
+          <div class="form-row">
+
+            <label class="form-field">
+              <span>遇到的问题</span>
+
+              <textarea
+                id="log-problem"
+                rows="4"
+                placeholder="记录错误信息或遇到的困难"
+              ></textarea>
+            </label>
+
+            <label class="form-field">
+              <span>解决方法</span>
+
+              <textarea
+                id="log-solution"
+                rows="4"
+                placeholder="记录问题原因和解决过程"
+              ></textarea>
+            </label>
+
+          </div>
+
+          <label class="form-field">
+            <span>下一步计划</span>
+
+            <textarea
+              id="log-next-step"
+              rows="3"
+              placeholder="记录下一次准备完成的任务"
+            ></textarea>
+          </label>
+
+          <div class="form-buttons">
+
+            <button
+              class="primary-button"
+              type="submit"
+            >
+              保存记录
+            </button>
+
+            <button
+              class="secondary-button"
+              type="reset"
+            >
+              清空表单
+            </button>
+
+          </div>
+
+        </form>
+
+
+        <!-- 历史记录展示区域 -->
+        <div class="history-section">
+
+          <div class="history-heading">
+            <h3>历史记录</h3>
+
+            <button
+              id="clear-all-button"
+              class="text-button"
+              type="button"
+            >
+              清空全部记录
+            </button>
+          </div>
+
+          <!-- 没有记录时显示 -->
+          <div
+            id="empty-message"
+            class="empty-message"
+          >
+            暂无记录。完成今天的任务后，
+            在上方添加第一条开发日志。
+          </div>
+
+          <!-- JavaScript会把历史记录添加到这里 -->
+          <div
+            id="log-list"
+            class="log-list"
+          ></div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ==================== 页面底部 ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>
+        LLM Deployment Lab · Personal AI Engineering Portfolio
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- 引入JavaScript文件 -->
+  <script src="auth.js?v=0.5.0"></script>
+  <script src="home-auth.js?v=0.5.0"></script>
+  <script src="app.js?v=20260802220447"></script>
+  <script src="chat.js?v=20260802220447"></script>
+</body>
+</html>

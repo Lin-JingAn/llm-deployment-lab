@@ -1,0 +1,8 @@
+fastapi
+httpx
+pwdlib
+pydantic
+PyJWT
+python-dotenv
+SQLAlchemy
+uvicorn

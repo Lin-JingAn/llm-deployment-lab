@@ -1,0 +1,246 @@
+.usage-page {
+  min-height: calc(100vh - 72px);
+  padding: 64px 0 90px;
+  background: var(--background);
+}
+
+.usage-user-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.usage-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.usage-hero h1 {
+  margin: 8px 0 12px;
+  color: var(--text-main);
+  font-size: clamp(34px, 5vw, 54px);
+  line-height: 1.05;
+}
+
+.usage-description {
+  max-width: 720px;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.usage-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 26px;
+}
+
+.usage-summary-card {
+  min-width: 0;
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow);
+}
+
+.usage-summary-card span {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.usage-summary-card strong {
+  color: var(--text-main);
+  font-size: 28px;
+}
+
+.usage-panel {
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow);
+}
+
+.usage-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.usage-toolbar label {
+  min-width: 190px;
+  display: grid;
+  gap: 7px;
+}
+
+.usage-toolbar label span {
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.usage-toolbar select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: var(--text-main);
+  background: var(--surface);
+  font: inherit;
+}
+
+.usage-toolbar-meta {
+  margin-left: auto;
+  padding-bottom: 10px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.usage-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.usage-table {
+  width: 100%;
+  min-width: 1120px;
+  border-collapse: collapse;
+}
+
+.usage-table th,
+.usage-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+  text-align: left;
+  vertical-align: top;
+  font-size: 13px;
+}
+
+.usage-table th {
+  color: var(--text-secondary);
+  background: #f7f9fc;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.usage-table td strong,
+.usage-table td span {
+  display: block;
+}
+
+.usage-table td span {
+  margin-top: 4px;
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.usage-status {
+  display: inline-flex !important;
+  width: fit-content;
+  margin: 0 !important;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 11px !important;
+  font-weight: 800;
+}
+
+.usage-status.success {
+  color: var(--success);
+  background: rgba(18, 128, 92, 0.1);
+}
+
+.usage-status.failed {
+  color: var(--danger);
+  background: rgba(180, 35, 24, 0.1);
+}
+
+.usage-error-cell {
+  max-width: 260px;
+  overflow: hidden;
+  color: var(--danger) !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.usage-error,
+.usage-empty {
+  margin: 16px 0;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.usage-error {
+  color: var(--danger);
+  background: rgba(180, 35, 24, 0.08);
+  border: 1px solid rgba(180, 35, 24, 0.18);
+}
+
+.usage-empty {
+  color: var(--text-secondary);
+  background: #f7f9fc;
+  text-align: center;
+}
+
+.usage-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.usage-pagination span {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .usage-page {
+    padding-top: 40px;
+  }
+
+  .usage-hero {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .usage-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .usage-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .usage-toolbar label {
+    width: 100%;
+  }
+
+  .usage-toolbar-meta {
+    margin-left: 0;
+    padding: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .usage-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .usage-user-actions span {
+    display: none;
+  }
+}

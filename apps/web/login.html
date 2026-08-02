@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>登录 | Unified LLM Platform</title>
+
+  <link
+    rel="stylesheet"
+    href="auth.css"
+  >
+</head>
+
+<body>
+  <main class="auth-page">
+
+    <section class="auth-introduction">
+      <h1>Unified LLM Platform</h1>
+
+      <p>
+        统一调用 Qwen、DeepSeek 及后续接入的模型，
+        并集中管理用户、调用记录和平台用量。
+      </p>
+    </section>
+
+    <section class="auth-panel">
+      <div class="auth-card">
+
+        <a
+          class="back-link"
+          href="index.html"
+        >
+          ← 返回首页
+        </a>
+
+        <h2>登录账户</h2>
+
+        <p class="auth-description">
+          登录后进入平台并继续使用模型服务。
+        </p>
+
+        <div
+          id="login-message"
+          class="auth-message"
+          role="alert"
+        ></div>
+
+        <form
+          id="login-form"
+          class="auth-form"
+        >
+          <div class="form-field">
+            <label for="email">
+              邮箱
+            </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              maxlength="320"
+              autocomplete="email"
+              required
+              placeholder="name@example.com"
+            >
+          </div>
+
+          <div class="form-field">
+            <label for="password">
+              密码
+            </label>
+
+            <input
+              id="password"
+              name="password"
+              type="password"
+              maxlength="128"
+              autocomplete="current-password"
+              required
+              placeholder="输入密码"
+            >
+          </div>
+
+          <button
+            id="login-button"
+            class="auth-button"
+            type="submit"
+          >
+            登录
+          </button>
+        </form>
+
+        <p class="auth-switch">
+          还没有账户？
+          <a href="register.html">
+            创建账户
+          </a>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="auth.js"></script>
+
+  <script>
+    "use strict";
+
+    const loginForm =
+      document.getElementById("login-form");
+
+    const loginButton =
+      document.getElementById("login-button");
+
+    const loginMessage =
+      document.getElementById("login-message");
+
+
+    function showLoginMessage(
+      message,
+      type
+    ) {
+      loginMessage.textContent = message;
+
+      loginMessage.className =
+        `auth-message is-visible is-${type}`;
+    }
+
+
+    loginForm.addEventListener(
+      "submit",
+      async (event) => {
+        event.preventDefault();
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("password")
+            .value;
+
+        loginButton.disabled = true;
+        loginButton.textContent = "正在登录……";
+
+        try {
+          await UnifiedLlmAuth.loginUser({
+            email,
+            password
+          });
+
+          showLoginMessage(
+            "登录成功，正在进入平台。",
+            "success"
+          );
+
+          window.setTimeout(
+            () => {
+              UnifiedLlmAuth.redirectToHome();
+            },
+            500
+          );
+        }
+        catch (error) {
+          showLoginMessage(
+            error.message,
+            "error"
+          );
+        }
+        finally {
+          loginButton.disabled = false;
+          loginButton.textContent = "登录";
+        }
+      }
+    );
+  </script>
+</body>
+</html>
