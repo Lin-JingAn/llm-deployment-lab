@@ -9,6 +9,7 @@ ProviderName = Literal[
     "DeepSeek",
     "OpenAI",
     "Anthropic",
+   "Local vLLM",
 ]
 
 
@@ -101,6 +102,20 @@ MODEL_REGISTRY: dict[str, ModelConfig] = {
         default_max_output_tokens=1024,
         max_output_tokens=8192,
     ),
+    "qwen2.5-7b-local": ModelConfig(
+    public_id="qwen2.5-7b-local",
+    upstream_model="qwen2.5-7b-local",
+    display_name="Qwen2.5-7B Local",
+    provider="Local vLLM",
+    enabled=True,
+    supports_streaming=True,
+    supports_reasoning=False,
+    supports_tools=False,
+    supports_vision=False,
+    default_temperature=0.7,
+    default_max_output_tokens=1024,
+    max_output_tokens=4096,
+),
 }
 
 

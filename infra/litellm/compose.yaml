@@ -14,8 +14,8 @@ services:
       HTTPS_PROXY: http://host.docker.internal:8899
       http_proxy: http://host.docker.internal:8899
       https_proxy: http://host.docker.internal:8899
-      NO_PROXY: 127.0.0.1,localhost,db
-      no_proxy: 127.0.0.1,localhost,db
+      NO_PROXY: 127.0.0.1,localhost,db,${LOCAL_VLLM_HOST}
+      no_proxy: 127.0.0.1,localhost,db,${LOCAL_VLLM_HOST}
     depends_on:
       db:
         condition: service_healthy
