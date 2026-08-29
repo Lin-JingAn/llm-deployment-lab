@@ -37,9 +37,11 @@ desktop.ini
 *.pid
 *.sqlite
 *.sqlite3
+artifacts/benchmarks/
 
 # Local backups and generated snapshots
 backups/
+apps/web/backup-before-*/
 *.bak
 *.backup
 *.before-*.bak
