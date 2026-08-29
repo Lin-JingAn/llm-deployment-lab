@@ -1,6 +1,6 @@
-# Unified LLM Platform
+# StarSail AI
 
-A multi-provider LLM application and serving platform that unifies cloud model APIs and self-hosted open-weight models behind a single application interface.
+A unified LLM application, gateway and inference-serving platform that exposes cloud model APIs and self-hosted open-weight models through one application interface.
 
 The platform is built with **FastAPI, LiteLLM, PostgreSQL, Docker, vLLM, and a browser-based frontend**. It currently supports cloud model providers such as **Alibaba Cloud Bailian / Qwen** and **DeepSeek**, as well as a self-hosted **Qwen2.5-7B-Instruct** model served on a Linux GPU server through **vLLM**.
 
@@ -98,6 +98,8 @@ The current implementation includes:
 | Health-check scripts | ✅ Verified |
 | Start / stop automation | ✅ Verified |
 | Secret scanning helper | ✅ Verified |
+| Automated unit tests | ✅ 8/8 passing locally |
+| Repeated RTX 3090 inference benchmark | ✅ 128/128 requests successful |
 | SGLang serving comparison | ⚠️ Evaluated, not part of the stable release |
 
 ---
@@ -161,6 +163,26 @@ The current implementation includes:
 Detailed architecture documentation:
 
 [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+
+Reproducible inference benchmark:
+
+[`docs/BENCHMARKING.md`](docs/BENCHMARKING.md)
+
+Verified RTX 3090 result:
+
+[`docs/benchmarks/qwen2.5-7b-rtx3090-20260829.md`](docs/benchmarks/qwen2.5-7b-rtx3090-20260829.md)
+
+Automated checks:
+
+```powershell
+cd apps\api
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+
+cd ..\..
+.\apps\api\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+The first command verifies model-gateway request normalization and usage parsing. The second verifies benchmark percentile, failure handling, repeated-run rollup, and aggregate-throughput calculations. The same commands run in GitHub Actions.
 
 ---
 
