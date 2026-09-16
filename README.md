@@ -1721,3 +1721,4 @@ The platform currently combines:
 - Git-based version management
 
 The current stable release demonstrates that cloud APIs and self-hosted open-weight models can be exposed through the same application interface while keeping the business layer, model gateway, and inference-serving layer cleanly separated.
+git practice test.
